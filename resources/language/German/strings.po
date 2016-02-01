@@ -1,0 +1,186 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2016-01-04 14:49+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30000"
+msgid "Debug-Mode"
+msgstr "Debug-Modus"
+
+msgctxt "#30001"
+msgid "Videoplayer"
+msgstr "Videoplayer"
+
+msgctxt "#30002"
+msgid "preferred language"
+msgstr "bevorzugte Sprache"
+
+msgctxt "#30003"
+msgid "show XXX sections (you have to be at legal age)"
+msgstr "zeige XXX Sektionen (Sie müssen volljährig sein)"
+
+msgctxt "#30004"
+msgid "use metahandler"
+msgstr "Metahandler benutzen"
+
+msgctxt "#30005"
+msgid "choose hoster automatically"
+msgstr "Hoster automatisch wählen"
+
+msgctxt "#30006"
+msgid "cachetime for websites (seconds)"
+msgstr "Cachezeit für Webseiten (Sekunden)"
+
+msgctxt "#30007"
+msgid "show hosterlist as folder"
+msgstr "zeige Hosterliste als Verzeichnis"
+
+msgctxt "#30008"
+msgid "metahandler replaces infos from site"
+msgstr "Metahandler ersetzt Infos von Site"
+
+msgctxt "#30009"
+msgid "Pre-validate and sort hosterlist (slow on weak systems)"
+msgstr "Hosterliste prüfen und sortieren (langsam auf schwachen Systemen)"
+
+msgctxt "#30021"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#30022"
+msgid "Site-plugins"
+msgstr "Site-Plugins"
+
+msgctxt "#30023"
+msgid "JDownloader settings"
+msgstr "JDownloader Einstellungen"
+
+msgctxt "#30024"
+msgid "Downloads"
+msgstr "Downloads"
+
+msgctxt "#30070"
+msgid "JDownloader"
+msgstr "JDownloader"
+
+msgctxt "#30071"
+msgid "JDownloader on/off"
+msgstr "JDownloader an/aus"
+
+msgctxt "#30072"
+msgid "Host"
+msgstr "Host"
+
+msgctxt "#30073"
+msgid "Port"
+msgstr "Port"
+
+msgctxt "#30074"
+msgid "Start download automatically"
+msgstr "Download automatisch starten"
+
+msgctxt "#30075"
+msgid "Send to LinkGrabber only"
+msgstr "Sende nur an LinkGrabber"
+
+msgctxt "#30080"
+msgid "XBMC-Download"
+msgstr "XBMC-Download"
+
+msgctxt "#30081"
+msgid "Download-folder"
+msgstr "Download-Verzeichnis"
+
+msgctxt "#30082"
+msgid "PyLoad on/off"
+msgstr "PyLoad an/aus"
+
+msgctxt "#30083"
+msgid "Username"
+msgstr "Benutzername"
+
+msgctxt "#30084"
+msgid "Password"
+msgstr "Passwort"
+
+msgctxt "#30301"
+msgid "Search"
+msgstr "Suche"
+
+msgctxt "#30302"
+msgid "All TV-Shows"
+msgstr "Alle Serien"
+
+msgctxt "#30303"
+msgid "Movie(s)"
+msgstr "Film(e)"
+
+msgctxt "#30304"
+msgid "Season"
+msgstr "Staffel"
+
+msgctxt "#30305"
+msgid "News from Today"
+msgstr "Neues von Heute"
+
+msgctxt "#30306"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#30307"
+msgid "TV-Shows"
+msgstr "Serien"
+
+msgctxt "#30308"
+msgid "Waiting time"
+msgstr "Wartezeit"
+
+msgctxt "#30309"
+msgid "Please wait %s seconds"
+msgstr "Bitte warte %s Sekunden"
+
+msgctxt "#30310"
+msgid "Documentations"
+msgstr "Dokumentationen"
+
+msgctxt "#30311"
+msgid "Cinema Movies"
+msgstr "Kinofilme"
+
+msgctxt "#30312"
+msgid "Genres"
+msgstr "Genres"
+
+msgctxt "#30313"
+msgid "Popular Movies"
+msgstr "Beliebteste Filme"
+
+msgctxt "#30314"
+msgid "Popular TV-Shows"
+msgstr "Beliebteste Serien"
+
+msgctxt "#30315"
+msgid "New TV-Shows"
+msgstr "Neuste Serien"
+
+msgctxt "#30316"
+msgid "Popular Documentations"
+msgstr "Beliebteste Dokumentationen"
+
+msgctxt "#30317"
+msgid "New Documentations"
+msgstr "Neuste Dokumentationen"
+
+msgctxt "#30318"
+msgid "Next Page"
+msgstr "Nächste Seite"
