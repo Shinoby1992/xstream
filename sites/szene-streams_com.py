@@ -33,6 +33,7 @@ def showMovieMenu():
     oGui.addFolder(cGuiElement('Alle Filme', SITE_IDENTIFIER, 'showEntries'), params)
     oGui.addFolder(cGuiElement('Genre', SITE_IDENTIFIER, 'showGenre'), params)
     oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showMovieSearch'))
+    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showTvShowMenu():
@@ -43,6 +44,7 @@ def showTvShowMenu():
     oGui.addFolder(cGuiElement('Alle Serien', SITE_IDENTIFIER, 'showEntries'), params)
     oGui.addFolder(cGuiElement('Genre', SITE_IDENTIFIER, 'showGenre'), params)
     oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showTvShowSearch'))
+    oGui.setView('tvshows')
     oGui.setEndOfDirectory()
 
 def showGenre():
@@ -65,11 +67,12 @@ def showGenre():
         params.setParam('sUrl', sUrl)
         params.setParam('mediaTypePageId', 1)
         oGui.addFolder(oGuiElement, params)
+    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showEntries(sContent = False, sGui = False):
     oGui = sGui if sGui else cGui()
-    oGui.setView('movie')
+    oGui.setView('movies')
     params = ParameterHandler()
     if sContent:
         sHtmlContent = sContent
@@ -107,6 +110,7 @@ def showEntries(sContent = False, sGui = False):
             oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
             break
     if not sGui:
+        oGui.setView('movies')
         oGui.setEndOfDirectory()
 
 # Show the hosters dialog
@@ -152,6 +156,7 @@ def showSearch():
     sSearchText = oGui.showKeyBoard()
     if not sSearchText: return
     _search(oGui, sSearchText)
+    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showMovieSearch():

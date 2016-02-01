@@ -43,7 +43,10 @@ def showEntries(entryUrl = False, sGui = False):
         oRequest = cRequestHandler(entryUrl)
 
     sHtmlContent = oRequest.request()
-    oGui.setView('movie')
+    if URL_SHOWS in entryUrl:
+        oGui.setView('tvshows')
+    else:
+        oGui.setView('movies')
 
     # Filter out the main section
     pattern = '<ul class="products row">(.*?)</ul>'
@@ -63,8 +66,7 @@ def showEntries(entryUrl = False, sGui = False):
     pattern += '<div[^>]*class="popover-content"[^>]*>\s*<p[^>]*>([^<>]*)</p>'
 
     aResult = cParser().parse(sMainContent, pattern)
-    if not aResult[0]:
-        return
+    if not aResult[0]: return
     for sUrl, sThumbnail, sName, sDesc in aResult[1]:
         # Grab the year (for movies)
         aYear = re.compile("(.*?)\((\d*)\)").findall(sName)
@@ -77,6 +79,7 @@ def showEntries(entryUrl = False, sGui = False):
         if iYear:
             oGuiElement.setYear(iYear)
         oGuiElement.setMediaType('movie')
+        sThumbnail = sThumbnail.replace('_thumb', '')
         oGuiElement.setThumbnail(sThumbnail)
         sDesc = cUtil().unescape(sDesc.decode('utf-8')).encode('utf-8').strip()
         oGuiElement.setDescription(sDesc)
@@ -102,24 +105,27 @@ def showHosters():
     pattern = '<a[^>]*episode="([^"]*)"[^>]*href="([^"]*)"[^>]*>'
     aResult = cParser().parse(sHtmlContent, pattern)
     if aResult[0] and len(aResult[1]) > 1:
-        oGui = cGui()
-        sTempName = params.getValue('sName')
-        iSeason = int(re.compile('.*?staffel\s*(\d+)').findall(sTempName.lower())[0])
-        sThumbnail = params.getValue('sThumbnail')
-        oGui.setView('episodes')
-        for iEpisode, sUrl in aResult[1]:
-            sName = 'Folge ' + str(iEpisode)
-            oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showLinks')
-            oGuiElement.setSeason(iSeason)
-            oGuiElement.setEpisode(iEpisode)
-            if sThumbnail:
-                oGuiElement.setThumbnail(sThumbnail)
-            params.setParam('sUrl', sUrl)
-            params.setParam('sName', sName)
-            oGui.addFolder(oGuiElement, params)
-        oGui.setEndOfDirectory()
+        showEpisodes(aResult[1], params)
     else:
         showLinks(entryUrl, params.getValue('sName'))
+
+def showEpisodes(aResult, params):
+    oGui = cGui()
+    sName = params.getValue('sName')
+    iSeason = int(re.compile('.*?staffel\s*(\d+)').findall(sName.lower())[0])
+    sThumbnail = params.getValue('sThumbnail')
+    oGui.setView('episodes')
+    for iEpisode, sUrl in aResult:
+        sName = 'Folge ' + str(iEpisode)
+        oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showLinks')
+        oGuiElement.setSeason(iSeason)
+        oGuiElement.setEpisode(iEpisode)
+        if sThumbnail:
+            oGuiElement.setThumbnail(sThumbnail)
+        params.setParam('sUrl', sUrl)
+        params.setParam('sName', sName)
+        oGui.addFolder(oGuiElement, params)
+    oGui.setEndOfDirectory()
 
 def showLinks(sUrl = False, sName = False):
     oGui = cGui()
@@ -132,14 +138,9 @@ def showLinks(sUrl = False, sName = False):
     aResult = cParser().parse(sHtmlContent, pattern)
     if not aResult[0] or not aResult[1][0]: return
 
-    # Immediately play if there is only one link
-    if len(aResult[1]) == 1:
-        play(json.loads(aResult[1][0])[0]['file'])
-        return
-
     for aEntry in json.loads(aResult[1][0]):
         if 'file' not in aEntry or 'label' not in aEntry: continue
-        sLabel = sName + ' - ' + aEntry['label']
+        sLabel = sName + ' - ' + aEntry['label'].encode('utf-8')
         oGuiElement = cGuiElement(sLabel, SITE_IDENTIFIER, 'play')
         params.setParam('url', aEntry['file'])
         oGui.addFolder(oGuiElement, params, False)

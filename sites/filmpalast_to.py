@@ -51,6 +51,7 @@ def showGenre():
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showEntries')
         params.setParam('sUrl', sUrl)
         oGui.addFolder(oGuiElement, params)
+    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showAlphaNumeric():
@@ -68,6 +69,7 @@ def showAlphaNumeric():
         oGuiElement = cGuiElement(sName, SITE_IDENTIFIER, 'showEntries')
         params.setParam('sUrl', sUrl)
         oGui.addFolder(oGuiElement, params)
+    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showEntries(entryUrl = False, sGui = False):
@@ -97,6 +99,7 @@ def showEntries(entryUrl = False, sGui = False):
     if aResult[0] and aResult[1][0]:
         params.setParam('sUrl', aResult[1][0])
         oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
+    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 # Show the hosters dialog
@@ -110,11 +113,10 @@ def showHosters():
     if not aResult[0]:
         return
     hosters = []
-    for sHost, sId in aResult[1]:
+    for sHost, iId in aResult[1]:
         hoster = dict()
-        sUrl = __getSource(sId)
-        if not sUrl: continue
-        hoster['link'] = sUrl
+        if not iId: continue
+        hoster['link'] = iId
         hoster['name'] = sHost
         hoster['displayedName'] = sHost
         hosters.append(hoster)
@@ -128,7 +130,7 @@ def getHosterUrl(sUrl = False):
         sUrl = oParams.getValue('url')
     results = []
     result = {}
-    result['streamUrl'] = sUrl
+    result['streamUrl'] = __getSource(sUrl)
     result['resolved'] = False
     results.append(result)
     return results

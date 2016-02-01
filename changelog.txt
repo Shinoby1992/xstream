@@ -1,6 +1,19 @@
-﻿- Version 2.1.18.2 - 12.01.2016
+﻿- Version 2.1.18.5 - 01.02.2016
 ================================================================================	
     - fix: added Fanart in Metahandler for GUI  thx Shinoby
+	
+- Version 2.1.18.5 - 30.01.2016
+================================================================================
+	- add new icons 512x512 
+	- fix Filmpalast 
+	- fix Szene-Stream
+	- fix HDFilme        thx versable 
+	- add ddl.me search  thx beam
+
+
+
+
+
 
 - Version 2.1.18.2 - 10.01.2016
 ================================================================================	
@@ -16,7 +29,6 @@
     - add: Szene-Stream  thx versable
 	
 	
-      
 
 
 - Version 2.1.17 - 01.10.2015
@@ -33,7 +45,7 @@
     - fix: Bs. search error 
     - fix: Y2K38 Bug workaround
     - add: SeriesEver and MovieEver
-	
+
     
 
 
