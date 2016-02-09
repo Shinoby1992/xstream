@@ -14,10 +14,28 @@ SITE_NAME = 'HDfilme.tV'
 SITE_ICON = 'hdfilme.png'
 
 URL_MAIN = 'http://hdfilme.tv/'
-URL_MOVIES = URL_MAIN + 'movie-movies'
-URL_CINEMA_MOVIES = URL_MAIN + 'movie-cinemas'
+URL_MOVIES = URL_MAIN + 'movie-movies?'
+URL_CINEMA_MOVIES = URL_MAIN + 'movie-cinemas?'
 URL_SHOWS = URL_MAIN + 'movie-series'
 URL_SEARCH = URL_MAIN + 'movie/search?key='
+
+URL_ABENTEUER = URL_MOVIES + 'cat=72'
+URL_ACTION = URL_MOVIES + 'cat=73'
+URL_ANIMATION = URL_MOVIES + 'cat=74'
+URL_DRAMA = URL_MOVIES + 'cat=62'
+URL_FAMILIE = URL_MOVIES + 'cat=65'
+URL_FANTASY = URL_MOVIES + 'cat=66'
+URL_HORROR = URL_MOVIES + 'cat=69' 	
+URL_KOMOEDIE = URL_MOVIES + 'cat=71'
+URL_KRIEG = URL_MOVIES + 'cat=77'
+URL_KRIMI = URL_MOVIES + 'cat=78'
+URL_MARTIALARTS = URL_MOVIES + 'cat=79'
+URL_MONUMENTALFILM = URL_MOVIES + 'cat=80'
+URL_ROMANZE = URL_MOVIES + 'cat=83'
+URL_SCIFI = URL_MOVIES + 'cat=84'
+URL_SPIONAGE = URL_MOVIES + 'cat=86'
+URL_THRILLER = URL_MOVIES + 'cat=88'
+URL_WESTERN = URL_MOVIES + 'cat=92'
 
 def load():
     logger.info("Load %s" % SITE_NAME)
@@ -27,6 +45,42 @@ def load():
     oGui.addFolder(cGuiElement('Filme', SITE_IDENTIFIER, 'showEntries'), params)
     params.setParam('sUrl', URL_CINEMA_MOVIES)
     oGui.addFolder(cGuiElement('Kinofilme', SITE_IDENTIFIER, 'showEntries'), params)
+    
+    params.setParam('sUrl', URL_ABENTEUER)
+    oGui.addFolder(cGuiElement('Abenteuer', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_ACTION)
+    oGui.addFolder(cGuiElement('Action', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_ANIMATION)
+    oGui.addFolder(cGuiElement('Animation', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_DRAMA)
+    oGui.addFolder(cGuiElement('Drama', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_FAMILIE)
+    oGui.addFolder(cGuiElement('Familie', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_FANTASY)
+    oGui.addFolder(cGuiElement('Fantasy', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_HORROR)
+    oGui.addFolder(cGuiElement('Horror', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_KOMOEDIE)
+    oGui.addFolder(cGuiElement('Komödie', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_KRIEG)
+    oGui.addFolder(cGuiElement('Krieg', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_KRIMI)
+    oGui.addFolder(cGuiElement('Krimi', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_MARTIALARTS)
+    oGui.addFolder(cGuiElement('Martial Arts', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_MONUMENTALFILM)
+    oGui.addFolder(cGuiElement('Monumentalfilm', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_ROMANZE)
+    oGui.addFolder(cGuiElement('Romanze', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_SCIFI)
+    oGui.addFolder(cGuiElement('Sci-Fi', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_SPIONAGE)
+    oGui.addFolder(cGuiElement('Spionage', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_THRILLER)
+    oGui.addFolder(cGuiElement('Thriller', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_WESTERN)
+    oGui.addFolder(cGuiElement('Western', SITE_IDENTIFIER, 'showEntries'), params)
+
     params.setParam('sUrl', URL_SHOWS)
     oGui.addFolder(cGuiElement('Serien', SITE_IDENTIFIER, 'showEntries'), params)
     oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showSearch'))
@@ -38,7 +92,7 @@ def showEntries(entryUrl = False, sGui = False):
     if not entryUrl: entryUrl = params.getValue('sUrl')
     iPage = int(params.getValue('page'))
     if iPage > 0:
-        oRequest = cRequestHandler(entryUrl + '?per_page=' + str(iPage * 50))
+        oRequest = cRequestHandler(entryUrl + '&per_page=' + str(iPage * 50))
     else:
         oRequest = cRequestHandler(entryUrl)
 

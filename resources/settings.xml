@@ -30,8 +30,6 @@
 	<setting default="kinox.to" enable="!eq(-1,false)" id="kinox_to-domain" label="Kinox domain" type="labelenum" values="kinox.to|kinox.me|kinox.tv" />
 	<setting label="KKiste.to" type="lsep" />
 	<setting default="false" id="plugin_kkiste_to" label="KKiste.to" type="bool" />
-	<setting label="Mein_ddl.me" type="lsep" />
-	<setting default="false" id="plugin_mein_ddl_me" label="Mein_ddl.me" type="bool" />
 	<setting label="Movie4k.to" type="lsep" />
 	<setting default="false" id="plugin_movie4k_to" label="Movie4k.to" type="bool" />
 	<setting default="movie4k.to" enable="!eq(-1,false)" id="movie4k_to-domain" label="Movie4k domain" type="labelenum" values="movie4k.to|movie4k.me|movie4k.tv" />
