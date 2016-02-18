@@ -3,20 +3,23 @@ from resources.lib.gui.gui import cGui
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
+from resources.lib.config import cConfig
 from resources.lib import logger
 from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib.handler.pluginHandler import cPluginHandler
 from resources.lib.util import cUtil
 import re, json
 
+
 SITE_IDENTIFIER = 'hdfilme_tv'
-SITE_NAME = 'HDfilme.tV'
+SITE_NAME = 'HDfilme.Tv'
 SITE_ICON = 'hdfilme.png'
 
 URL_MAIN = 'http://hdfilme.tv/'
+URL_LOGIN = URL_MAIN + 'login.html?'
 URL_MOVIES = URL_MAIN + 'movie-movies?'
 URL_CINEMA_MOVIES = URL_MAIN + 'movie-cinemas?'
-URL_SHOWS = URL_MAIN + 'movie-series'
+URL_SHOWS = URL_MAIN + 'movie-series?'
 URL_SEARCH = URL_MAIN + 'movie/search?key='
 
 URL_ABENTEUER = URL_MOVIES + 'cat=72'
@@ -38,6 +41,10 @@ URL_THRILLER = URL_MOVIES + 'cat=88'
 URL_WESTERN = URL_MOVIES + 'cat=92'
 
 def load():
+
+    oGui = cGui()
+	
+   
     logger.info("Load %s" % SITE_NAME)
     oGui = cGui()
     params = ParameterHandler()
@@ -85,6 +92,7 @@ def load():
     oGui.addFolder(cGuiElement('Serien', SITE_IDENTIFIER, 'showEntries'), params)
     oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showSearch'))
     oGui.setEndOfDirectory()
+	
 
 def showEntries(entryUrl = False, sGui = False):
     oGui = sGui if sGui else cGui()
@@ -103,13 +111,13 @@ def showEntries(entryUrl = False, sGui = False):
         oGui.setView('movies')
 
     # Filter out the main section
-    pattern = '<ul class="products row">(.*?)</ul>'
+    pattern = '<ul class="products row">.*?</ul>'
     aResult = cParser().parse(sHtmlContent, pattern)
     if not aResult[0] or not aResult[1][0]: return
     sMainContent = aResult[1][0]
 
     # Grab the link
-    pattern = '<div[^>]*class="box-product clearfix"[^>]*>\s*'
+    pattern = '<div[^>]*class="box-product clearfix"[^>]*>\s*?'
     pattern += '<a[^>]*href="([^"]*)"[^>]*>.*?'
     # Grab the thumbnail
     pattern += '<img[^>]*src="([^"]*)"[^>]*>.*?'
@@ -142,8 +150,8 @@ def showEntries(entryUrl = False, sGui = False):
         params.setParam('sThumbnail', sThumbnail)
         oGui.addFolder(oGuiElement, params)
 
-    pattern = '<ul[^>]*class="pagination[^>]*>.*?'
-    pattern += '<li[^>]*class="active"[^>]*><a>(\d*)</a>.*?</ul>'
+    pattern = '<ul[^>]*class="pagination[^>]*>.*'
+    pattern += '<li[^>]*class="active"[^>]*><a>(\d*)</a>.*</ul>'
     aResult = cParser().parse(sHtmlContent, pattern)
     if aResult[0] and aResult[1][0]:
         params.setParam('page', int(aResult[1][0]))
@@ -156,7 +164,7 @@ def showHosters():
     oRequest = cRequestHandler(entryUrl)
     sHtmlContent = oRequest.request()
     # Check if the page contains episodes
-    pattern = '<a[^>]*episode="([^"]*)"[^>]*href="([^"]*)"[^>]*>'
+    pattern = '<a[^>]*episoden="([^"]*)"[^>]*href="([^"]*)"[^>]*>'
     aResult = cParser().parse(sHtmlContent, pattern)
     if aResult[0] and len(aResult[1]) > 1:
         showEpisodes(aResult[1], params)
@@ -181,17 +189,23 @@ def showEpisodes(aResult, params):
         oGui.addFolder(oGuiElement, params)
     oGui.setEndOfDirectory()
 
-def showLinks(sUrl = False, sName = False):
+def showLinks(sUrl =False, sName = False):
     oGui = cGui()
     params = ParameterHandler()
     sUrl = sUrl if sUrl else params.getValue('sUrl')
     sName = sName if sName else params.getValue('sName')
     oRequest = cRequestHandler(sUrl)
     sHtmlContent = oRequest.request()
-    pattern = 'var newlink = (.*?);'
-    aResult = cParser().parse(sHtmlContent, pattern)
-    if not aResult[0] or not aResult[1][0]: return
 
+    pattern = 'var config = .*?(\[.*?\])'            
+    aResult = cParser().parse(sHtmlContent, pattern)
+
+    if ((not 'http' in str(aResult)) or (not 'https' in str(aResult))):
+        pattern = 'var newlink = (\[.*?\])'      
+        aResult = cParser().parse(sHtmlContent, pattern)
+
+    if not aResult[0] or not aResult[1][0]: return 
+        
     for aEntry in json.loads(aResult[1][0]):
         if 'file' not in aEntry or 'label' not in aEntry: continue
         sLabel = sName + ' - ' + aEntry['label'].encode('utf-8')

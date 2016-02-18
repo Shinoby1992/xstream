@@ -1,7 +1,12 @@
-﻿- Version 2.1.18.7 - 09.02.2016
+﻿- Version 2.1.18.8 - 18.02.2016
 ================================================================================	
     - fix: added Fanart in Metahandler for GUI  thx Khoobde
+
+- Version 2.1.18.7 - 016.02.2016
+================================================================================ 
+    - fix HDFilme          thx Paddy and Loki
 	
+
 - Version 2.1.18.6 - 04.02.2016
 ================================================================================
 	- add new Fanart          thx Paddy
@@ -16,12 +21,7 @@
 	- fix Szene-Stream
 	- fix HDFilme        thx versable 
 	- add ddl.me search  thx beam
-
-
-
-
-
-
+	- add new icon 
 
 - Version 2.1.18.2 - 10.01.2016
 ================================================================================	
@@ -35,6 +35,7 @@
     - add: Filmpalast    thx versable
     - add: HDFilme       thx versable 
     - add: Szene-Stream  thx versable
+	
 
 
 - Version 2.1.17 - 01.10.2015
@@ -51,7 +52,7 @@
     - fix: Bs. search error 
     - fix: Y2K38 Bug workaround
     - add: SeriesEver and MovieEver
-
+    
 
 
 - Version 2.1.12 - 11.01.2015
