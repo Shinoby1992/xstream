@@ -12,7 +12,7 @@ import re, json
 
 
 SITE_IDENTIFIER = 'hdfilme_tv'
-SITE_NAME = 'HDfilme.Tv'
+SITE_NAME = 'HDfilme.TV'
 SITE_ICON = 'hdfilme.png'
 
 URL_MAIN = 'http://hdfilme.tv/'
@@ -48,10 +48,28 @@ def load():
     logger.info("Load %s" % SITE_NAME)
     oGui = cGui()
     params = ParameterHandler()
-    params.setParam('sUrl', URL_MOVIES)
-    oGui.addFolder(cGuiElement('Filme', SITE_IDENTIFIER, 'showEntries'), params)
+    oGui.addFolder(cGuiElement('Filme',SITE_IDENTIFIER,'showMovieMenu'))
+    
+    params.setParam('sUrl', URL_SHOWS)
+    oGui.addFolder(cGuiElement('Serien', SITE_IDENTIFIER, 'showEntries'), params)
+    oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showSearch'))
+    oGui.setEndOfDirectory()
+
+def showMovieMenu():
+    oGui = cGui()
+    params = ParameterHandler()
+
     params.setParam('sUrl', URL_CINEMA_MOVIES)
     oGui.addFolder(cGuiElement('Kinofilme', SITE_IDENTIFIER, 'showEntries'), params)
+    params.setParam('sUrl', URL_MOVIES)
+    oGui.addFolder(cGuiElement('Alle Filme', SITE_IDENTIFIER, 'showEntries'), params)
+    oGui.addFolder(cGuiElement('Genre',SITE_IDENTIFIER,'showMovieGenre'))   
+    
+    oGui.setEndOfDirectory()     
+
+def showMovieGenre():
+    oGui = cGui()
+    params = ParameterHandler()
     
     params.setParam('sUrl', URL_ABENTEUER)
     oGui.addFolder(cGuiElement('Abenteuer', SITE_IDENTIFIER, 'showEntries'), params)
@@ -88,11 +106,7 @@ def load():
     params.setParam('sUrl', URL_WESTERN)
     oGui.addFolder(cGuiElement('Western', SITE_IDENTIFIER, 'showEntries'), params)
 
-    params.setParam('sUrl', URL_SHOWS)
-    oGui.addFolder(cGuiElement('Serien', SITE_IDENTIFIER, 'showEntries'), params)
-    oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showSearch'))
     oGui.setEndOfDirectory()
-	
 
 def showEntries(entryUrl = False, sGui = False):
     oGui = sGui if sGui else cGui()
@@ -164,7 +178,7 @@ def showHosters():
     oRequest = cRequestHandler(entryUrl)
     sHtmlContent = oRequest.request()
     # Check if the page contains episodes
-    pattern = '<a[^>]*episoden="([^"]*)"[^>]*href="([^"]*)"[^>]*>'
+    pattern = '<a[^>]*episode="([^"]*)"[^>]*href="([^"]*)"[^>]*>'
     aResult = cParser().parse(sHtmlContent, pattern)
     if aResult[0] and len(aResult[1]) > 1:
         showEpisodes(aResult[1], params)
@@ -197,13 +211,9 @@ def showLinks(sUrl =False, sName = False):
     oRequest = cRequestHandler(sUrl)
     sHtmlContent = oRequest.request()
 
-    pattern = 'var config = .*?(\[.*?\])'            
+    pattern = 'var hdfilme6 = .*?(\[.*?\])'            
     aResult = cParser().parse(sHtmlContent, pattern)
-
-    if ((not 'http' in str(aResult)) or (not 'https' in str(aResult))):
-        pattern = 'var newlink = (\[.*?\])'      
-        aResult = cParser().parse(sHtmlContent, pattern)
-
+    
     if not aResult[0] or not aResult[1][0]: return 
         
     for aEntry in json.loads(aResult[1][0]):

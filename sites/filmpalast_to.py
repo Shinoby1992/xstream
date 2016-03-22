@@ -14,7 +14,7 @@ SITE_IDENTIFIER = 'filmpalast_to'
 SITE_NAME = 'FilmPalast.to'
 SITE_ICON = 'filmpalast.png'
 
-URL_MAIN = 'http://www.filmpalast.to/'
+URL_MAIN = 'http://filmpalast.to/'
 URL_STREAM = URL_MAIN + 'stream/%d/1'
 URL_MOVIES_NEW = URL_MAIN + 'movies/new/'
 URL_MOVIES_TOP = URL_MAIN + 'movies/top/'
@@ -108,7 +108,7 @@ def showHosters():
     oRequest = cRequestHandler(params.getValue('entryUrl'))
     sHtmlContent = oRequest.request()
     pattern = '<p[^>]*class="hostName"[^>]*>([^<>]+)</p>.*?'
-    pattern += '<a[^>]*class="[^"]*stream-src[^"]*"[^>]*data-id="([^"]+)"[^>]*>'
+    pattern += '<a[^>]*class="[^"]*stream-src[^"]*"[^>]*data-id="([^"]+)"[^>].*?>'
     aResult = cParser().parse(sHtmlContent, pattern)
     if not aResult[0]:
         return
