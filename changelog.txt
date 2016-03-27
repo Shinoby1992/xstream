@@ -1,7 +1,20 @@
-﻿- Version 2.1.18.8 - 18.03.2016
+﻿- Version 2.1.18.9 - 27.03.2016
 ================================================================================	
     - fix: added Fanart in Metahandler for GUI  thx Human K (Ebay name: khoobde)
 	
+-Version 2.1.18.9 - 22.03.2016  -  
+fix HDFilme - Movie4k  Serien
+-Version 2.1.18.8 - 22.03.2016
+================================================================================
+- fix HDFilme     - Reg ex / thx Loki
+- add DDL.me      - thx Paddy , Loki 
+- fix DDL.me      - Reg ex / thx Loki
+- fix DDL.me      - Ordnerstruktur 
+- fix HDFilme     - Stopp position  
+
+
+
+
 -Version 2.1.18.7.2 - 08.03.2016
 ================================================================================
 - fix HDFilme     - Stream Hoster
