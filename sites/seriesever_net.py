@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# version: 0.2
 from resources.lib.gui.gui import cGui
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.handler.requestHandler import cRequestHandler
@@ -140,7 +139,7 @@ def showSeries(sUrl=False):
     if not sUrl:
         sUrl = oParams.getValue('sUrl')
 
-    sPagePattern = '<a href="' + sUrl + '(.*?).html">'
+    sPagePattern = '<a href="' + sUrl + '(\d+).html">'
 
     # request
     sHtmlContent = __getHtmlContent(sUrl)
@@ -151,14 +150,13 @@ def showSeries(sUrl=False):
     pages = 1
 
     if aResult[0]:
-        if RepresentsInt(aResult[1][-1][0]):
-            pages = aResult[1][-1][0]
+        if representsInt(aResult[1][-1]):
+            pages = aResult[1][-1]
 
     oGui = cGui()
 
     # because sometimes 2 pages have the same content
     dupeCheck = []
-
     for x in range(1, int(pages) + 1):
         dupeCheck = showSeriesPage(oGui, sUrl, x, dupeCheck)
 
@@ -186,7 +184,7 @@ def showFrontPage():
             # Special fix for non-int episode numbers (like Attack on Titan 13.5)
             # Can't even check this on thetvdb.com, because AOT 13.5 for example is Season 0 Episode 1
             # May I can use "<airsbefore_episode>" and "<airsbefore_season>" for metadata
-            if RepresentsInt(episode):
+            if representsInt(episode):
                 guiElement.setEpisode(episode)
 
             guiElement.setTVShowTitle(title)
@@ -299,7 +297,7 @@ def showEpisodes():
             # Special fix for non-int episode numbers (like Attack on Titan 13.5)
             # Can't even check this on thetvdb.com, because AOT 13.5 for example is Season 0 Episode 1
             # May I can use "<airsbefore_episode>" and "<airsbefore_season>" for metadata
-            if RepresentsInt(eNr):
+            if representsInt(eNr):
                 guiElement.setEpisode(eNr)
 
             guiElement.setTVShowTitle(sTitle)
@@ -311,7 +309,7 @@ def showEpisodes():
     oGui.setEndOfDirectory()
 
 
-def RepresentsInt(s):
+def representsInt(s):
     try:
         int(s)
         return True
@@ -400,12 +398,11 @@ def parseHosterResponse(json_data, hosters):
 
         hname = 'Unknown Hoster'
         try:
-            hname = re.compile('^(?:https?:\/\/)?(?:[^@\n]+@)?([^:\/\n]+)', flags=re.I | re.M).findall(hoster['link'])
+            hname = re.compile('^(?:https?:\/\/)?(?:www\.)?(?:[^@\n]+@)?([^:\/\n]+)', flags=re.I | re.M).findall(hoster['link'])
         except Exception, e:
             logger.error(e)
 
         hoster['name'] = hname[0]
-        hoster['displayedName'] = hname[0]
         hoster['link'] = hoster['link']
 
         hosters.append(hoster)
@@ -413,14 +410,14 @@ def parseHosterResponse(json_data, hosters):
     return hosters
 
 
-def __decodeHash(hash):
-    hash = hash.replace("!BeF", "R")
-    hash = hash.replace("@jkp", "Ax")
+def __decodeHash(sHash):
+    sHash = sHash.replace("!BeF", "R")
+    sHash = sHash.replace("@jkp", "Ax")
     try:
-        url = base64.b64decode(hash)
+        url = base64.b64decode(sHash)
         return url
     except:
-        logger.error("Invalid Base64: %s" % hash)
+        logger.error("Invalid Base64: %s" % sHash)
 
 
 def getHosterUrl(sUrl=False):
@@ -457,8 +454,8 @@ def __get_domain_list(app, domain_list):
     return domain_list
 
 
-def __getOldurl(link):
-    sHtmlContent = __getHtmlContent(link)
+def __getOldurl(sLink):
+    sHtmlContent = __getHtmlContent(sLink)
     url = re.findall('url="(.*?)"', sHtmlContent)
 
     if len(url) == 0:
@@ -468,8 +465,8 @@ def __getOldurl(link):
         else:
             if "play/se.php" in url[0]:
                 sHtmlContent = __getHtmlContent(url[0])
-                hash = re.findall('link:"(.*?)"', sHtmlContent)[0]
-                return __decodeHash(hash)
+                sHash = re.findall('link:"(.*?)"', sHtmlContent)[0]
+                return __decodeHash(sHash)
             else:
                 logger.error("Unknown url: %s" % url)
     else:

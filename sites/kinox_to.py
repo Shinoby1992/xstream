@@ -13,7 +13,7 @@ from resources.lib.handler.ParameterHandler import ParameterHandler
 from resources.lib import jsunprotect
 
 SITE_IDENTIFIER = 'kinox_to'
-SITE_NAME = 'Kinox.to'
+SITE_NAME = 'KinoX'
 SITE_ICON = 'kinox.png'
 SITE_SETTINGS = '<setting default="kinox.to" enable="!eq(-1,false)" id="kinox_to-domain" label="Kinox domain" type="labelenum" values="kinox.to|kinox.me|kinox.tv" />'
 oConfig = cConfig()
@@ -53,19 +53,19 @@ def load():
     oParams.setParam('sUrl', URL_NEWS)
     oParams.setParam('page', 1)
     oParams.setParam('mediaType', 'news')
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30305),SITE_IDENTIFIER,'showNews'),oParams)
+    oGui.addFolder(cGuiElement('Neues von Heute',SITE_IDENTIFIER,'showNews'),oParams)
     oParams.setParam('sUrl', URL_MOVIE_PAGE)
     oParams.setParam('mediaType', 'movie')
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30306),SITE_IDENTIFIER,'showMovieMenu'),oParams)
+    oGui.addFolder(cGuiElement('Filme',SITE_IDENTIFIER,'showMovieMenu'),oParams)
     oParams.setParam('sUrl', URL_SERIE_PAGE)
     oParams.setParam('mediaType', 'series')
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30307),SITE_IDENTIFIER,'showSeriesMenu'),oParams)
+    oGui.addFolder(cGuiElement('Serien',SITE_IDENTIFIER,'showSeriesMenu'),oParams)
     oParams.setParam('sUrl', URL_DOCU_PAGE)
     oParams.setParam('mediaType', 'documentation')
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30310),SITE_IDENTIFIER,'showDocuMenu'),oParams)
+    oGui.addFolder(cGuiElement('Dokumentationen',SITE_IDENTIFIER,'showDocuMenu'),oParams)
     oParams.setParam('sUrl', URL_SEARCH)
     oParams.setParam('mediaType', '')
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30301),SITE_IDENTIFIER,'showSearch'),oParams)
+    oGui.addFolder(cGuiElement('Suche',SITE_IDENTIFIER,'showSearch'),oParams)
     oGui.setEndOfDirectory()
 
 ######## Allgemeines
@@ -91,11 +91,11 @@ def showMovieMenu():
     oGui = cGui()
     oParams = ParameterHandler()
 
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30311),SITE_IDENTIFIER,'showCinemaMovies'),oParams)
+    oGui.addFolder(cGuiElement('Kinofilme',SITE_IDENTIFIER,'showCinemaMovies'),oParams)
     oGui.addFolder(cGuiElement('A-Z',SITE_IDENTIFIER,'showCharacters'),oParams)
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30312),SITE_IDENTIFIER,'showGenres'),oParams)
+    oGui.addFolder(cGuiElement('Genres',SITE_IDENTIFIER,'showGenres'),oParams)
     oParams.setParam('sUrl', URL_FAVOURITE_MOVIE_PAGE)
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30313), SITE_IDENTIFIER, 'showFavItems'),oParams)
+    oGui.addFolder(cGuiElement('Beliebteste Filme', SITE_IDENTIFIER, 'showFavItems'),oParams)
     oGui.setEndOfDirectory()
 
 def showSeriesMenu():
@@ -105,9 +105,9 @@ def showSeriesMenu():
     oGui.addFolder(cGuiElement('A-Z',SITE_IDENTIFIER,'showCharacters'),oParams)
     #oGui.addFolder(cGuiElement('Genres',SITE_IDENTIFIER,'showGenres'),oParams)
     oParams.setParam('sUrl', URL_FAVOURITE_SERIE_PAGE)
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30314),SITE_IDENTIFIER,'showFavItems'),oParams)
+    oGui.addFolder(cGuiElement('Beliebteste Serien',SITE_IDENTIFIER,'showFavItems'),oParams)
     oParams.setParam('sUrl', URL_LATEST_SERIE_PAGE)
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30315),SITE_IDENTIFIER,'showFavItems'),oParams)
+    oGui.addFolder(cGuiElement('Neuste Serien',SITE_IDENTIFIER,'showFavItems'),oParams)
     oGui.setEndOfDirectory()
 
 def showDocuMenu():
@@ -117,9 +117,9 @@ def showDocuMenu():
     oGui.addFolder(cGuiElement('A-Z',SITE_IDENTIFIER,'showCharacters'),oParams)
     #oGui.addFolder(cGuiElement('Genres',SITE_IDENTIFIER,'showGenres'),oParams)
     oParams.setParam('sUrl', URL_FAVOURITE_DOCU_PAGE)
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30316),SITE_IDENTIFIER,'showFavItems'),oParams)
+    oGui.addFolder(cGuiElement('Beliebteste Dokumentationen',SITE_IDENTIFIER,'showFavItems'),oParams)
     oParams.setParam('sUrl', URL_LATEST_DOCU_PAGE)
-    oGui.addFolder(cGuiElement(cConfig().getLocalizedString(30317),SITE_IDENTIFIER,'showFavItems'),oParams)
+    oGui.addFolder(cGuiElement('Neuste Dokumentationen',SITE_IDENTIFIER,'showFavItems'),oParams)
     oGui.setEndOfDirectory()
 
 def __createLanguage(sLangID):

@@ -11,7 +11,7 @@ from resources.lib.util import cUtil
 import json
 
 SITE_IDENTIFIER = 'filmpalast_to'
-SITE_NAME = 'FilmPalast.to'
+SITE_NAME = 'FilmPalast'
 SITE_ICON = 'filmpalast.png'
 
 URL_MAIN = 'http://filmpalast.to/'
@@ -100,7 +100,8 @@ def showEntries(entryUrl = False, sGui = False):
         params.setParam('sUrl', aResult[1][0])
         oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
     oGui.setView('movies')
-    oGui.setEndOfDirectory()
+    if not sGui: 
+        oGui.setEndOfDirectory()
 
 # Show the hosters dialog
 def showHosters():
@@ -140,13 +141,13 @@ def showSearch():
     oGui = cGui()
     sSearchText = oGui.showKeyBoard()
     if not sSearchText: return
-    _search(oGui, sSearchText)
+    _search(False, sSearchText)
+    oGui.setEndOfDirectory()
 
 # Search using the requested string sSearchText
 def _search(oGui, sSearchText):
     if not sSearchText: return
     showEntries(URL_SEARCH + sSearchText, oGui)
-    oGui.setEndOfDirectory()
 
 def __checkUrl(url):
     return url if 'http:' in url else URL_MAIN + url

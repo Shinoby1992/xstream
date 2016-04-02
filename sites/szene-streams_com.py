@@ -10,7 +10,7 @@ from resources.lib.util import cUtil
 import re
 
 SITE_IDENTIFIER = 'szene-streams_com'
-SITE_NAME = 'Szene-Streams'
+SITE_NAME = 'SzeneStreams'
 SITE_ICON = 'szenestreams.png'
 
 URL_MAIN = 'http://www.szene-streams.com/'
@@ -33,7 +33,6 @@ def showMovieMenu():
     oGui.addFolder(cGuiElement('Alle Filme', SITE_IDENTIFIER, 'showEntries'), params)
     oGui.addFolder(cGuiElement('Genre', SITE_IDENTIFIER, 'showGenre'), params)
     oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showMovieSearch'))
-    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showTvShowMenu():
@@ -44,7 +43,6 @@ def showTvShowMenu():
     oGui.addFolder(cGuiElement('Alle Serien', SITE_IDENTIFIER, 'showEntries'), params)
     oGui.addFolder(cGuiElement('Genre', SITE_IDENTIFIER, 'showGenre'), params)
     oGui.addFolder(cGuiElement('Suche', SITE_IDENTIFIER, 'showTvShowSearch'))
-    oGui.setView('tvshows')
     oGui.setEndOfDirectory()
 
 def showGenre():
@@ -67,12 +65,10 @@ def showGenre():
         params.setParam('sUrl', sUrl)
         params.setParam('mediaTypePageId', 1)
         oGui.addFolder(oGuiElement, params)
-    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showEntries(sContent = False, sGui = False):
     oGui = sGui if sGui else cGui()
-    oGui.setView('movies')
     params = ParameterHandler()
     if sContent:
         sHtmlContent = sContent
@@ -109,8 +105,8 @@ def showEntries(sContent = False, sGui = False):
             params.setParam('mediaTypePageId', page)
             oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
             break
+    oGui.setView('movies')
     if not sGui:
-        oGui.setView('movies')
         oGui.setEndOfDirectory()
 
 # Show the hosters dialog
@@ -143,7 +139,7 @@ def showHosters():
         hname = "Part %d - %s" % (idx, hname)
         idx += 1
 
-        hoster['name'] = hname
+        hoster['name'] = previousName
         hoster['displayedName'] = hname
         hosters.append(hoster)
     if hosters:
@@ -156,7 +152,6 @@ def showSearch():
     sSearchText = oGui.showKeyBoard()
     if not sSearchText: return
     _search(oGui, sSearchText)
-    oGui.setView('movies')
     oGui.setEndOfDirectory()
 
 def showMovieSearch():
@@ -187,7 +182,7 @@ def getHosterUrl(sUrl = False):
     return results
 
 def getHosterName(name):
-    return re.compile('^(?:https?:\/\/)?(?:[^@\n]+@)?([^:\/\n]+)', flags=re.I | re.M).findall(name)[0]
+    return re.compile('^(?:https?:\/\/)?(?:www\.)?(?:[^@\n]+@)?([^:\/\n]+)', flags=re.I | re.M).findall(name)[0]
 
 # Search using the requested string sSearchText
 def _search(oGui, sSearchText):
@@ -195,7 +190,6 @@ def _search(oGui, sSearchText):
     data = getSearchResult(sSearchText, URL_MOVIES)
     data += getSearchResult(sSearchText, URL_SHOWS)
     showEntries(data, oGui)
-    oGui.setEndOfDirectory()
 
 def getSearchResult(sSearchText, url):
     oRequest = cRequestHandler(url)

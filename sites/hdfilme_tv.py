@@ -153,7 +153,7 @@ def showEntries(entryUrl = False, sGui = False):
 
     # Funktion verlassen falls keine Daten ermittelt werden konnten
     if not aResult[0] or not aResult[1][0]: 
-        oGui.showInfo('xStream','Es wurde kein Eintrag gefunden')
+        if not sGui: oGui.showInfo('xStream','Es wurde kein Eintrag gefunden')
         return
 
     # Content festlegen der geparst werden soll
@@ -177,7 +177,9 @@ def showEntries(entryUrl = False, sGui = False):
     aResult = cParser().parse(sMainContent, pattern)
 
     # Kein Einträge gefunden? => Raus hier
-    if not aResult[0]: return
+    if not aResult[0]: 
+        if not sGui: oGui.showInfo('xStream','Es wurde kein Eintrag gefunden')
+        return
 
     # Alle Ergebnisse durchlaufen
     for sUrl, sThumbnail, sName, sDesc in aResult[1]:
@@ -222,7 +224,8 @@ def showEntries(entryUrl = False, sGui = False):
         oGui.addNextPage(SITE_IDENTIFIER, 'showEntries', params)
 
     # Liste abschließen
-    oGui.setEndOfDirectory()
+    if not sGui:
+        oGui.setEndOfDirectory()
 
 def showHosters():
     # ParameterHandler erzeugen
@@ -337,7 +340,10 @@ def showSearch():
     if not sSearchText: return
 
     # Suche durchführen
-    _search(oGui, sSearchText)
+    _search(False, sSearchText)
+
+    #Liste abschließen
+    oGui.setEndOfDirectory()
 
 # Such-Funktion (z.b auch für Globale-Suche)
 def _search(oGui, sSearchText):

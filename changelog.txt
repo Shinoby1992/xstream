@@ -1,9 +1,29 @@
-﻿- Version 2.1.18.9 - 27.03.2016
+﻿- Version 2.1.18.10 - 03.04.2016
 ================================================================================	
     - fix: added Fanart in Metahandler for GUI  thx Human K (Ebay name: khoobde)
-	
--Version 2.1.18.9 - 22.03.2016  -  
+	 
 fix HDFilme - Movie4k  Serien
+
+-Version 2.1.18.10 - 29.03.2016 
+================================================================================
+-fix HDFilme        - RegEx / thx Loki
+-fix M4k            - hoster Auswahl  
+-fix Bs             - Fehlerbehebung beim aufrufen
+-fix Globale Suche  - Die suche funktioniert wieder 
+-fix DDl.me         - Code verbessert und kleine Veränderungen    
+     
+-add Cineplex       - Grundfunktionen /rest wird noch kommen
+-add Gute Filme     - Grundfunktionen /leider noch ohne Hoster 
+-add Icon           - Neues Xstream Icon / thx paddy        
+
+
+-Version 2.1.18.9 - 22.03.2016 
+================================================================================
+-fix HDFilme       - Reg ex / thx Loki 
+-fix Movie4k       - Serien 
+
+
+
 -Version 2.1.18.8 - 22.03.2016
 ================================================================================
 - fix HDFilme     - Reg ex / thx Loki
