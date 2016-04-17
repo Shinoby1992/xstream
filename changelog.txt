@@ -1,8 +1,29 @@
-﻿- Version 2.1.18.10 - 03.04.2016
+﻿- Version 2.1.18.10 - 17.04.2016
 ================================================================================	
     - fix: added Fanart in Metahandler for GUI  thx Human K (Ebay name: khoobde)
-	 
-fix HDFilme - Movie4k  Serien
+
+Version 2.1.18.11.1 - 16.04.16
+================================================================================
+-fix HDFilme      - thx StoneOffStones    
+-fix BS           - thx viper2k4    
+-fix BS Genres
+-code fixes       - thx Lynx187
+
+
+
+
+
+
+Version 2.1.18.11 - 03.04.16
+================================================================================
+-add Anime-Loads   - thx viper2k4
+-fix Download.py 
+-fix Hoster.py
+-fix HDFilme       
+-fix BS 
+-fix resolver
+
+
 
 -Version 2.1.18.10 - 29.03.2016 
 ================================================================================

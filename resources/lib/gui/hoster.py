@@ -4,6 +4,7 @@ from resources.lib.config import cConfig
 from resources.lib.gui.gui import cGui
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.player import cPlayer
+from distutils.version import LooseVersion as V
 import xbmc, xbmcgui
 import logger
 #test
@@ -208,7 +209,10 @@ class cHosterGui:
                 priority = False
                 for resolver in source._HostedMediaFile__resolvers:
                     if resolver.domains[0] != '*':
-                        priority = resolver.priority
+                        if V(urlresolver.common.addon_version) > V("2.10.12"):
+                            priority = resolver._get_priority()
+                        else:
+                            priority = resolver.priority
                         break
                     if not priority:
                         priority = resolver.priority                        
