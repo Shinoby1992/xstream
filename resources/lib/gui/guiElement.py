@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 from os import path
-from  resources.lib.common import addon
+from resources.lib.common import addon
 from resources.lib.config import cConfig
 import logger
 
@@ -218,9 +219,10 @@ class cGuiElement:
             return False
         oMetaget = metahandlers.MetaData()
         if self._mediaType == 'movie' or self._mediaType == 'tvshow':
-            meta = oMetaget.get_meta(self._mediaType, self.__sTitle)
-            #if self._mediaType == 'tvshow' and not self.__aItemValues['TVShowTitle']:
-            #    self.setTVShowTitle(self.__sTitle)
+            if self._mediaType == 'tvshow' and self.__aItemValues.get('TVShowTitle',False):
+                meta = oMetaget.get_meta(self._mediaType, self.__aItemValues['TVShowTitle'])
+            else:
+                meta = oMetaget.get_meta(self._mediaType, self.__sTitle)         
         elif self._mediaType == 'season':
             meta = oMetaget.get_seasons(TVShowTitle, imdbID, str(season))
         elif self._mediaType == 'episode':

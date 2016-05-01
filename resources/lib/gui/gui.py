@@ -37,37 +37,49 @@ class cGui:
             self.pluginPath = sys.argv[0]
         except:
             self.pluginPath = ''
-        if cConfig().getSetting('metahandler')=='true':
-           self.isMetaOn = True
-        else:
-           self.isMetaOn = False
+        self.isMetaOn = cConfig().getSetting('metahandler')=='true'
         if cConfig().getSetting('metaOverwrite')=='true':
            self.metaMode = 'replace'
         else:
            self.metaMode = 'add'
+        #for globalSearch or alterSearch
+        self.globalSearch = False
+        self._collectMode = False
+        self.searchResults = []
 
 
-    def addFolder(self, oGuiElement, oOutputParameterHandler='', bIsFolder = True, iTotal = 0, isHoster = False):
+
+    def addFolder(self, oGuiElement, outParams='', bIsFolder = True, iTotal = 0, isHoster = False):
         '''
         add GuiElement to Gui, adds listitem to a list
         '''
+        # abort xbmc list creation if user requests abort
+        if xbmc.abortRequested:
+            self.setEndOfDirectory(False)
+            raise RuntimeError('UserAborted')
+        # store result in list if we searched global for other sources
+        if  self._collectMode:
+            import copy
+            self.searchResults.append({'guiElement':oGuiElement,'params':copy.deepcopy(outParams),'isFolder':bIsFolder})
+            return
+
         if not oGuiElement._isMetaSet and self.isMetaOn and oGuiElement._mediaType:
-            imdbID = oOutputParameterHandler.getValue('imdbID')
+            imdbID = outParams.getValue('imdbID')
             if imdbID:
                 oGuiElement.getMeta(oGuiElement._mediaType, imdbID, mode = self.metaMode)
             else:
                 oGuiElement.getMeta(oGuiElement._mediaType, mode = self.metaMode)
 
-        sItemUrl = self.__createItemUrl(oGuiElement, bIsFolder, oOutputParameterHandler)
+        sItemUrl = self.__createItemUrl(oGuiElement, bIsFolder, outParams)
         oListItem = self.createListItem(oGuiElement) 
-        if not bIsFolder and cConfig().getSetting('hosterListFolder') == 'true':
+        if not bIsFolder and cConfig().getSetting('hosterSelect') == 'list':
             bIsFolder = True
         if isHoster:
             bIsFolder = False
-        oListItem = self.__createContextMenu(oGuiElement, oListItem, bIsFolder, sItemUrl, oOutputParameterHandler)
+        oListItem = self.__createContextMenu(oGuiElement, oListItem, bIsFolder, sItemUrl, outParams)
                  
-        #if not bIsFolder:
-        #    oListItem.setProperty('IsPlayable', 'true')        
+        if not bIsFolder:
+            oListItem.setProperty('IsPlayable', 'true')        
         xbmcplugin.addDirectoryItem(self.pluginHandle, sItemUrl, oListItem, isFolder = bIsFolder, totalItems = iTotal)
         
 
@@ -85,14 +97,20 @@ class cGui:
         '''
         itemValues= oGuiElement.getItemValues()
         itemTitle = oGuiElement.getTitle()
+        infoString = ''
         if oGuiElement._sLanguage != '':
-            itemTitle += ' (%s)' % oGuiElement._sLanguage
+            infoString += ' (%s)' % oGuiElement._sLanguage
         if oGuiElement._sSubLanguage != '':
-            itemTitle += ' *Sub: %s*' % oGuiElement._sSubLanguage
+            infoString += ' *Sub: %s*' % oGuiElement._sSubLanguage
         if oGuiElement._sQuality != '':
-            itemTitle += ' [%s]' % oGuiElement._sQuality
-        itemValues['title'] = itemTitle
-        oListItem = xbmcgui.ListItem(itemTitle, oGuiElement.getTitleSecond(), oGuiElement.getIcon(), oGuiElement.getThumbnail())
+            infoString += ' [%s]' % oGuiElement._sQuality
+        if self.globalSearch:
+            infoString += ' %s' % oGuiElement.getSiteName() 
+        if infoString:
+            infoString = '[I]%s[/I]' % infoString
+        itemValues['title'] = itemTitle + infoString
+         
+        oListItem = xbmcgui.ListItem(itemTitle + infoString, oGuiElement.getTitleSecond(), oGuiElement.getIcon(), oGuiElement.getThumbnail())
         oListItem.setInfo(oGuiElement.getType(), itemValues)     
         oListItem.setProperty('fanart_image', oGuiElement.getFanart())
         aProperties = oGuiElement.getItemProperties()
@@ -111,14 +129,24 @@ class cGui:
             sTest = "%s?site=%s&function=%s&%s" % (self.pluginPath, oContextItem.getFile(), oContextItem.getFunction(), sParams)                
             aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s)" % (sTest,),)]
 
+        itemValues = oGuiElement.getItemValues()
+
         oContextItem = cContextElement()
         oContextItem.setTitle("Info")
         aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.Action(Info)",)]
-        itemValues = oGuiElement.getItemValues()
+
+        #search for alternative source
+        oContextItem.setTitle("Weitere Quellen")
+        searchParams = {}
+        searchParams['searchTitle'] = oGuiElement.getTitle()
+        if 'imdb_id' in itemValues:
+            searchParams['searchImdbID'] = itemValues['imdb_id']
+        aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.Container.Update(%s?function=searchAlter&%s)" % (self.pluginPath, urllib.urlencode(searchParams),),)]
+     
         if 'imdb_id' in itemValues and 'title' in itemValues:
             metaParams = {} 
             if itemValues['title']:
-                metaParams['title'] = itemValues['title']
+                metaParams['title'] = oGuiElement.getTitle()
             if 'mediaType' in itemValues and itemValues['mediaType']:
                 metaParams['mediaType'] = itemValues['mediaType']
             elif 'TVShowTitle' in itemValues and itemValues['TVShowTitle']:
@@ -132,6 +160,7 @@ class cGui:
                 and 'season' in itemValues and itemValues['season'] and int(itemValues['season']) ):
                 metaParams['episode'] = itemValues['episode']
                 metaParams['mediaType'] = 'episode'
+            # if an imdb id is available we can mark this element as seen/unseen in the metahandler
             if itemValues['imdb_id']:
                 metaParams['imdbID'] = itemValues['imdb_id']
                 if itemValues['overlay'] == '7':
@@ -139,11 +168,12 @@ class cGui:
                 else:
                     oContextItem.setTitle("Als gesehen markieren")
                 aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s?function=changeWatched&%s)" % (self.pluginPath, urllib.urlencode(metaParams),),)]
+            # if year is set we can search reliably for metainfos via metahandler
             if 'year' in itemValues and itemValues['year']:
                 metaParams['year'] = itemValues['year']
             oContextItem.setTitle("Suche Metainfos")
             aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s?function=updateMeta&%s)" % (self.pluginPath, urllib.urlencode(metaParams),),)]
-
+        # context options for movies or episodes
         if not bIsFolder:
             oContextItem.setTitle("add to Playlist")     
             aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s&playMode=enqueue)" % (sItemUrl,),)]
@@ -152,9 +182,12 @@ class cGui:
             if cConfig().getSetting('jd_enabled') == 'true':
                 oContextItem.setTitle("send to JDownloader")
                 aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s&playMode=jd)" % (sItemUrl,),)]   
-	    if cConfig().getSetting('pyload_enabled') == 'true':
-		oContextItem.setTitle("send to PyLoad")     
-         	aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s&playMode=pyload)" % (sItemUrl,),)]
+            if cConfig().getSetting('pyload_enabled') == 'true':
+                oContextItem.setTitle("send to PyLoad")     
+                aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s&playMode=pyload)" % (sItemUrl,),)]
+            if cConfig().getSetting('hosterSelect')=='auto':
+                oContextItem.setTitle("select hoster")     
+                aContextMenus+= [ ( oContextItem.getTitle(), "XBMC.RunPlugin(%s&playMode=play&manual=1)" % (sItemUrl,),)]
         oListItem.addContextMenuItems(aContextMenus)
         #oListItem.addContextMenuItems(aContextMenus, True)  
         return oListItem
@@ -180,6 +213,7 @@ class cGui:
     def setView(self, content='movies'):
         '''
         set the listing to a certain content, makes special views available
+        sets view to the viewID which is selected in xStream settings
         '''
         if content == 'movies':
             xbmcplugin.setContent(self.pluginHandle, 'movies')
@@ -211,11 +245,10 @@ class cGui:
             oOutputParameterHandler.setParam('TVShowTitle',itemValues['TVShowTitle'])
         if 'season' in itemValues and itemValues['season'] and int(itemValues['season'])>0:
             oOutputParameterHandler.setParam('season',itemValues['season'])
-        if 'episode' in itemValues and itemValues['episode'] and int(itemValues['episode'])>0:
+        if 'episode' in itemValues and itemValues['episode'] and float(itemValues['episode'])>0:
             oOutputParameterHandler.setParam('episode',itemValues['episode'])
-        #TODO change this, it can cause bugs
+        #TODO change this, it can cause bugs it influencec the params for the following listitems
         if not bIsFolder:
-            oOutputParameterHandler.setParam('playMode','play')
             oOutputParameterHandler.setParam('MovieTitle',oGuiElement.getTitle())
             
             thumbnail = oGuiElement.getThumbnail()
@@ -228,7 +261,7 @@ class cGui:
                 oOutputParameterHandler.setParam('mediaType','tvshow')
             if 'season' in itemValues and itemValues['season'] and int(itemValues['season'])>0:
                 oOutputParameterHandler.setParam('mediaType','season')
-            if 'episode' in itemValues and itemValues['episode'] and int(itemValues['episode'])>0:
+            if 'episode' in itemValues and itemValues['episode'] and float(itemValues['episode'])>0:
                 oOutputParameterHandler.setParam('mediaType','episode')
                                              
         sParams = oOutputParameterHandler.getParameterAsUri()
@@ -236,6 +269,8 @@ class cGui:
             sItemUrl = "%s?site=%s&title=%s&%s" % (self.pluginPath, oGuiElement.getSiteName(), urllib.quote_plus(oGuiElement.getTitle()), sParams)
         else:
             sItemUrl = "%s?site=%s&function=%s&title=%s&%s" % (self.pluginPath, oGuiElement.getSiteName(), oGuiElement.getFunction(), urllib.quote_plus(oGuiElement.getTitle()), sParams)
+            if not bIsFolder:
+                sItemUrl += '&playMode=play'
         return sItemUrl       
 
     def showKeyBoard(self, sDefaultText = ""):
@@ -262,30 +297,25 @@ class cGui:
         
 
     def showNofication(self, sTitle, iSeconds=0):
-        if not cConfig().isDharma():
-          return
         if (iSeconds == 0):
           iSeconds = 1000
         else:
           iSeconds = iSeconds * 1000  
-        xbmc.executebuiltin("Notification(%s,%s,%s)" % (cConfig().getLocalizedString(30308), (cConfig().getLocalizedString(30309) % str(sTitle)), iSeconds))
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (cConfig().getLocalizedString(30308), (cConfig().getLocalizedString(30309) % str(sTitle)), iSeconds, common.addon.getAddonInfo('icon')))
         
 
     def showError(self, sTitle, sDescription, iSeconds = 0):
-        #if not cConfig().isDharma():
-         # return
         if iSeconds == 0:
           iSeconds = 1000
         else:
           iSeconds = iSeconds * 1000
-        xbmc.executebuiltin("Notification(%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds))
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, common.addon.getAddonInfo('icon')))
         
 
     def showInfo(self, sTitle, sDescription, iSeconds=0):
-        if not cConfig().isDharma():
-            return
         if (iSeconds == 0):
             iSeconds = 1000
         else:
             iSeconds = iSeconds * 1000
-        xbmc.executebuiltin("Notification(%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds))
+        xbmc.executebuiltin("Notification(%s,%s,%s,%s)" % (str(sTitle), (str(sDescription)), iSeconds, common.addon.getAddonInfo('icon')))
+         

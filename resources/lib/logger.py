@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import xbmc
 from resources.lib.handler.ParameterHandler import ParameterHandler
 
@@ -21,8 +22,12 @@ def fatal(sInfo):
 
 def __writeLog(sLog, cLogLevel):
     params = ParameterHandler()
+    try:
+        sLog = str(sLog)
+    except UnicodeEncodeError:
+        sLog = sLog.encode('utf-8')
     if params.exist('site'):
         site = params.getValue('site')
-        print "\t[PLUGIN] xStream->" + site + ": " + str(sLog)
+        print "\t[xStream] ->%s: %s" %(site,sLog)
     else:
-        print "\t[PLUGIN] xStream: " + str(sLog)
+        print "\t[xStream] %s" % sLog

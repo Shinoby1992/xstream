@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.xstream"
 	name="xStream"
-	version="2.1.12"
-	provider-name="Lynx187 (originator: murphy, MaxMustermann)">
+	version="2.2.0"
+	provider-name="[COLOR red]Khoobde (DEpoisoned Custom Version)[/COLOR]">
   <requires>
     <import addon="xbmc.python"                 version="2.1.0"/>
-    <import addon="script.module.urlresolver"   version="2.4.0"/>
+    <import addon="script.module.urlresolver"   version="2.9.0"/>
     <import addon="script.module.metahandler"   version="1.0.0"/>
     <import addon="script.module.mechanize"     version="0.2.6"/>
   </requires>
@@ -14,11 +14,11 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="de">xStream</summary>
-    <description lang="de">xStream ist ein Addon, welches mit eigenen Plugins erweitert werden kann. Hiermit kann man Filme, Serien, etc. per Stream anschauen.[CR]Support: http://xstream-addon.square7.ch </description>
+    <description lang="de">xStream ist ein Addon, welches mit eigenen Plugins erweitert werden kann. Hiermit kann man Filme, Serien, etc. per Stream anschauen.[CR]Support: https://www.facebook.com/groups/1644997469075472/ </description>
     <summary lang="en">xStream</summary>
-    <description lang="en">Addon to watch streams from various film an series sites.[CR]Support: http://xstream-addon.square7.ch</description>
-    <forum>http://xstream-addon.square7.ch</forum>
-    <website>http://xstream-addon.square7.ch</website>
+    <description lang="en">Addon to watch streams from various film an series sites.[CR]Support: https://www.facebook.com/groups/1644997469075472/</description>
+    <forum>http://tiny.cc/depoisoned</forum>
+    <website>https://www.facebook.com/groups/1644997469075472/</website>
     <platform>all</platform>
   </extension>
 </addon>
