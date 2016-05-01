@@ -1,139 +1,4 @@
-﻿- Version 2.1.18.10 - 17.04.2016
-================================================================================	
-    - fix: added Fanart in Metahandler for GUI  thx Human K (Ebay name: khoobde)
-
-Version 2.1.18.11.1 - 16.04.16
-================================================================================
--fix HDFilme      - thx StoneOffStones    
--fix BS           - thx viper2k4    
--fix BS Genres
--code fixes       - thx Lynx187
-
-
-
-
-
-
-Version 2.1.18.11 - 03.04.16
-================================================================================
--add Anime-Loads   - thx viper2k4
--fix Download.py 
--fix Hoster.py
--fix HDFilme       
--fix BS 
--fix resolver
-
-
-
--Version 2.1.18.10 - 29.03.2016 
-================================================================================
--fix HDFilme        - RegEx / thx Loki
--fix M4k            - hoster Auswahl  
--fix Bs             - Fehlerbehebung beim aufrufen
--fix Globale Suche  - Die suche funktioniert wieder 
--fix DDl.me         - Code verbessert und kleine Veränderungen    
-     
--add Cineplex       - Grundfunktionen /rest wird noch kommen
--add Gute Filme     - Grundfunktionen /leider noch ohne Hoster 
--add Icon           - Neues Xstream Icon / thx paddy        
-
-
--Version 2.1.18.9 - 22.03.2016 
-================================================================================
--fix HDFilme       - Reg ex / thx Loki 
--fix Movie4k       - Serien 
-
-
-
--Version 2.1.18.8 - 22.03.2016
-================================================================================
-- fix HDFilme     - Reg ex / thx Loki
-- add DDL.me      - thx Paddy , Loki 
-- fix DDL.me      - Reg ex / thx Loki
-- fix DDL.me      - Ordnerstruktur 
-- fix HDFilme     - Stopp position  
-
-
-
-
--Version 2.1.18.7.2 - 08.03.2016
-================================================================================
-- fix HDFilme     - Stream Hoster
-- add HDFilme     - Neue Ordnerstruktur 
-- fix Filmpalast  - Stream Hoster
-
-
--Version 2.1.18.7.1 - 21.02.2016
-================================================================================ 
-- fix Bs.py
-
-
-
-- Version 2.1.18.7 - 16.02.2016
-================================================================================ 
-    - fix HDFilme          thx Paddy and Loki
-	
-
-- Version 2.1.18.6 - 04.02.2016
-================================================================================
-	- add new Fanart          thx Paddy
-	- add HDFilme Kategorien  thx R.H   
-	- add new icon            thx Paddy
-
-
-- Version 2.1.18.5 - 30.01.2016
-================================================================================
-	- add new icons 512x512 
-	- fix Filmpalast 
-	- fix Szene-Stream
-	- fix HDFilme        thx versable 
-	- add ddl.me search  thx beam
-	- add new icon 
-
-	Spezial Edition Nur in der Gruppe Kodi Unlimited Support und 
-	Hardware-Software-Kodi-DE  erhältlich
-
-
-
-
-
-
-- Version 2.1.18.2 - 10.01.2016
-================================================================================	
-    - fix: G-stream time out
-    - fix: Globale search 
-    - fix: Movie4k.py
-    - fix: Kinox.py
-    - fix: Moviesever    thx seberoth 
-    - fix: Seriesever    thx seberoth
-    - add: new icons 
-    - add: Filmpalast    thx versable
-    - add: HDFilme       thx versable 
-    - add: Szene-Stream  thx versable
-	
-	
-     Spezial Edition Nur in der Gruppe Kodi Unlimited Support erhältlich   
-
-
-- Version 2.1.17 - 01.10.2015
-================================================================================
-    - fix: Bs_finalizer.pyo (Thx Svenni)  
-    - fix: Bs.py 
-    - fix: m4k encoding problems
-    - fix: Kinoleak search
-    - fix: Kinox news 
-    - fix: Kinox Hoster and mirror regex 
-    - fix: Kinoleak to get all available hoster
-    - fix: Gstream Account
-    - fix: Merge pull reguest
-    - fix: Bs. search error 
-    - fix: Y2K38 Bug workaround
-    - add: SeriesEver and MovieEver
-	Spezial Edition Nur in der Gruppe Kodi Unlimited Support erhältlich
-    
-
-
-- Version 2.1.12 - 11.01.2015
+﻿- Version 2.1.12 - 11.01.2015
 ================================================================================
     - fix: gstream content RegEx
     - fix: pyLoadHandler (config)
@@ -240,7 +105,7 @@ Version 2.1.18.11 - 03.04.16
     - finally deleted sites: kino-kiste, serienjunkies
 
     - burning-series: season,episode in xbmc-style(should work with xbmc-subtitles)
-	,search function, list by character, some code refactoring
+        ,search	function, list by character, some code refactoring
     - kinox: season,episode in xbmc-style, metadata from site for dokus, some code refactoring
     - g-stream: some fixes and code refactoring
     - m2k: now m4k, some fixes and code refactoring
@@ -433,14 +298,14 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - site refactoring
     
     - add new sites:
-	- burning-series.org
-	- kinokiste.com
+        - burning-series.org
+        - kinokiste.com
 
     - add new hosters:
-	- xvidstage.com
-	- filesup.com
-	- filebase.to
-	- ecostream.tv
+        - xvidstage.com
+        - filesup.com
+        - filebase.to
+        - ecostream.tv
 
 ================================================================================
 - Version 0.4.5 - 02.01.2011
@@ -448,7 +313,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - add site radiotime.com
 
     - fix bild.de
-	- channel comedy
+        - channel comedy
 
 ================================================================================
 - Version 0.4.4 - 02.01.2011
@@ -456,10 +321,10 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - add site anime-stream24.com
 
     - add hoster
-	- vidbux
-	- vidxden
-	- divxstage
-	- dankfile
+        - vidbux
+        - vidxden
+        - divxstage
+        - dankfile
 
     - add poster and description to moviemaze.de trailers
 
@@ -470,7 +335,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 - Version 0.4.3 - 28.12.2010
 ================================================================================
     - add site br-online.de
-	- program: alpha-Centauri
+        - program: alpha-Centauri
 
 ================================================================================
 - Version 0.4.2 - 27.12.2010
@@ -482,12 +347,12 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - fix kino.to
 
     - fix hosters:
-	- archive
+        - archive
 
     - add hosters
-	- skyload
-	- filestage
-	- fullshare	   
+        - skyload
+        - filestage
+        - fullshare        
 
 ================================================================================
 - Version 0.3.4 - 08.11.2010
@@ -498,16 +363,16 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 - Version 0.3.3 - 05.11.2010
 ================================================================================
     - add kino.to functions
-	- show favourite series, docus, movies
-	- show latets entries
-	- show news
-	- set language by title
-	- add info item
-	- add thumbnail to movies, series, docus
-	- add other hoster (flash / divx)
+        - show favourite series, docus, movies
+        - show latets entries
+        - show news
+        - set language by title
+        - add info item
+        - add thumbnail to movies, series, docus
+        - add other hoster (flash / divx)
 
     - hoster:
-	- archive
+        - archive
 
 ================================================================================
 - Version 0.3.2 - 03.11.2010
@@ -516,11 +381,11 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - add mtv.de WeeklyCharts
 
     - sites:
-	- simpsons.to (serie stream)
+        - simpsons.to (serie stream)
 
     - hoster:
-	- zshare
-	- qip
+        - zshare
+        - qip
 
 ================================================================================
 - Version 0.3.1 - 01.11.2010
@@ -531,10 +396,10 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - add new hoster for movie2k
 
     - hoster:
-	- moveshare
-	- filestage
-	- screen4u
-	- checkThisVid
+        - moveshare
+        - filestage
+        - screen4u
+        - checkThisVid
 
 ================================================================================
 - Version 0.3.0 - 31.10.2010
@@ -545,13 +410,13 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - add downloadfunction
 
     - sites:
-	- movie2k.com (streams)
+        - movie2k.com (streams)
 
     - hoster:
-	- novamov
-	- stream2k
-	- streamesel
-	- videoweed
+        - novamov
+        - stream2k
+        - streamesel
+        - videoweed
 
 ================================================================================
 - Version 0.2.0 - 29.10.2010
@@ -562,8 +427,8 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - performancetweaks
 
     - sites:
-	- moviemaze.de (trailers)
-	- shoucast.com (radio)
+        - moviemaze.de (trailers)
+        - shoucast.com (radio)
 
 ================================================================================
 - Version 0.1.0 - 28.10.2010 [initial version]
@@ -571,23 +436,23 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     - initial version
 
     sites:
-	- kino.to (streams)
-	- g-stream.in (streams)
-	- southpark.de (southpark german / english)
-	- mtv.de (musicvideo / serien)
-	- nba.de (basketball)
-	- bundesliga.de (football)
-	- kino.de (movietrailers)
-	- bild.de (streams)
-	- myp2p.eu (streams)
+        - kino.to (streams)
+        - g-stream.in (streams)
+        - southpark.de (southpark german / english)
+        - mtv.de (musicvideo / serien)
+        - nba.de (basketball)
+        - bundesliga.de (football)
+        - kino.de (movietrailers)
+        - bild.de (streams)
+        - myp2p.eu (streams)
 
     hoster:
-	- dataup
-	- duckload
-	- loadedit
-	- megavideo
-	- mystream
-	- quickload
-	- sharehoster
-	- skyload
-	- tubeload
+        - dataup
+        - duckload
+        - loadedit
+        - megavideo
+        - mystream
+        - quickload
+        - sharehoster
+        - skyload
+        - tubeload

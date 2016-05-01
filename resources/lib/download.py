@@ -5,7 +5,6 @@ import xbmc
 import xbmcgui
 import string
 import logger
-import time
 
 class cDownload:
 
@@ -20,15 +19,9 @@ class cDownload:
         filename = filename.replace(' ','_')
         return filename
 
-    def download(self,url, sTitle):
+    def download(self, sUrl, sTitle):
         self.__processIsCanceled = False
-        # extract header
-        try: header = dict([item.split('=') for item in (url.split('|')[1]).split('&')])
-        except: header = {}
-        logger.info('Header for download: %s' % (header))
-
-        url = url.split('|')[0]    
-        sTitle = self.__createTitle(url, sTitle)
+        sTitle = self.__createTitle(sUrl, sTitle)
         self.__sTitle = self.__createDownloadFilename(sTitle)
         
         oGui = cGui()
@@ -41,19 +34,20 @@ class cDownload:
                 sPath = dialog.browse(3, 'Downloadfolder', 'files', '')
 
             if (sPath != ''):                
-                sDownloadPath = xbmc.translatePath(sPath +  '%s' % (self.__sTitle, )).decode('utf-8')
+                sDownloadPath = xbmc.translatePath(sPath +  '%s' % (self.__sTitle, ))
+                #print sDownloadPath
                 try:
-                    logger.info('download file: ' + str(url) + ' to ' + str(sDownloadPath))
+                    logger.info('download file: ' + str(sUrl) + ' to ' + str(sDownloadPath))
                     self.__createProcessDialog()
-                    request = urllib2.Request(url, headers=header)
-                    self.__download(urllib2.urlopen(request), sDownloadPath)   
-                except Exception as e:
-                    logger.error(e)
+                    self.__download(urllib2.urlopen(sUrl), sDownloadPath)   
+                except:
+                    pass
 
                 self.__oDialog.close()
 
     def __download(self, oUrlHandler, fpath):
         headers = oUrlHandler.info()
+        #print headers
 
         iTotalSize = -1
         if "content-length" in headers:
@@ -61,8 +55,7 @@ class cDownload:
 
         chunk = 4096
         f = open(fpath, "wb")
-        iCount = 0
-        self._startTime = time.time()      
+        iCount = 0        
         while 1:
             iCount = iCount +1
             data = oUrlHandler.read(chunk)
@@ -85,14 +78,8 @@ class cDownload:
         return sTitle
 
     def __stateCallBackFunction(self, iCount, iBlocksize, iTotalSize):
-        timedif = time.time() - self._startTime
-        currentLoaded = float(iCount * iBlocksize)
-        if timedif > 0.0:
-            avgSpd = int(currentLoaded/timedif/1024.0)
-        else:
-            avgSpd = 5
-        iPercent = int( currentLoaded*100/ iTotalSize)
-        self.__oDialog.update(iPercent, self.__sTitle, '%s/%s@%dKB/s' %(self.__formatFileSize(currentLoaded),self.__formatFileSize(iTotalSize),avgSpd))
+        iPercent = int(float(iCount * iBlocksize * 100) / iTotalSize)
+        self.__oDialog.update(iPercent, self.__sTitle, self.__formatFileSize(iTotalSize))
 
         if (self.__oDialog.iscanceled()):
             self.__processIsCanceled = True
